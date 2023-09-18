@@ -39,33 +39,7 @@ const authService = {
     };
   },
 
-  // Create Channel
-  createChannel: async (name, user_ids) => {
-    try {
-      // Get user authentication headers from authService
-      const headers = authService.getAuthHeaders();
-
-      // Send a POST request to create the channel
-      const response = await axios.post(
-        `${API_URL}/channels`,
-        {
-          name,
-          user_ids,
-        },
-        { headers }
-      );
-
-      // Handle the response and return the result
-      if (response.status === 200) {
-        return response.data; // You can customize this based on your API response format
-      } else {
-        // Handle errors, if any
-        throw new Error('Failed to create channel');
-      }
-    } catch (error) {
-      throw error;
-    }
-  },
+ 
   
 };
 

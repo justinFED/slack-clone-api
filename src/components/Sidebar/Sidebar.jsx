@@ -18,8 +18,6 @@ const Sidebar = () => {
         
         <CreateIcon />
      
-
-     
       </div>
 
       <div className="sidebarOption">
@@ -28,7 +26,7 @@ const Sidebar = () => {
       <hr />
       <h2>Add Channel</h2>
       <hr />
-      
+
       <hr />
 
 
