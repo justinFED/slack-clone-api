@@ -28,6 +28,11 @@ const Sidebar = () => {
       <hr />
       <h2>Add Channel</h2>
       <hr />
+      
+      <hr />
+
+
+
       <h2>List of Users</h2>
       <hr />
       </div>
