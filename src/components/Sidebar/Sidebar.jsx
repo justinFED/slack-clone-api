@@ -26,7 +26,9 @@ const Sidebar = () => {
         <div className="sidebar-text">
       <h2>New Message</h2>
       <hr />
-      <h2>Channels</h2>
+      <h2>Add Channel</h2>
+      <hr />
+      <h2>List of Users</h2>
       <hr />
       </div>
 
