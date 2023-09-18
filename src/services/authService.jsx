@@ -2,11 +2,40 @@ import axios from 'axios';
 
 const API_URL = 'http://206.189.91.54/api/v1';
 
+// Create an Axios instance with default headers
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Add an interceptor to set authentication headers for requests
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('access-token');
+    const client = localStorage.getItem('client');
+    const expiry = localStorage.getItem('expiry');
+    const uid = localStorage.getItem('uid');
+
+    if (accessToken && client && expiry && uid) {
+      config.headers['access-token'] = accessToken;
+      config.headers['client'] = client;
+      config.headers['expiry'] = expiry;
+      config.headers['uid'] = uid;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 const authService = {
-  // Register
   register: async (email, password, passwordConfirmation) => {
     try {
-      const response = await axios.post(`${API_URL}/auth`, {
+      const response = await axiosInstance.post('/auth', {
         email,
         password,
         password_confirmation: passwordConfirmation,
@@ -16,69 +45,49 @@ const authService = {
       throw error;
     }
   },
-  // Login
+
   login: async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/auth/sign_in`, {
+      const response = await axiosInstance.post('/auth/sign_in', {
         email,
         password,
       });
+  
+      localStorage.setItem('access-token', response.headers['access-token']);
+      localStorage.setItem('client', response.headers['client']);
+      localStorage.setItem('expiry', response.headers['expiry']);
+      localStorage.setItem('uid', response.headers['uid']);
+  
       return response;
     } catch (error) {
       throw error;
     }
   },
+  
 
   createChannel: async (channelName, userIds) => {
     try {
-      // Get the authentication headers
-      const headers = authService.getAuthHeaders();
-  
-      // Define the request body with the channel name and user_ids
       const requestBody = {
         name: channelName,
-        user_ids: userIds, // Pass the array of user IDs
+        user_ids: userIds,
       };
-  
-      // Make the POST request to create the channel
-      const response = await axios.post(`${API_URL}/channels`, requestBody, {
-        headers,
-      });
-  
+
+      const response = await axiosInstance.post('/channels', requestBody);
+
       return response;
     } catch (error) {
       throw error;
     }
   },
-  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Function to get authentication headers
-  getAuthHeaders: () => {
-    return {
-      'access-token': localStorage.getItem('access-token'),
-      client: localStorage.getItem('client'),
-      expiry: localStorage.getItem('expiry'),
-      uid: localStorage.getItem('uid'),
-    };
+  searchUsers: async () => {
+    try {
+      const response = await axiosInstance.get('/users');
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   },
-
- 
   
 };
 

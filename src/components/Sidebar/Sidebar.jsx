@@ -1,33 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiberManualRecord } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import authService from '../../services/authService';
+
 import './Sidebar.css';
 
 const Sidebar = () => {
-  const [channels, setChannels] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [channelName, setChannelName] = useState('');
-  const [userId, setUserId] = useState('');
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userOptions, setUserOptions] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleUserSearch = async () => {
+    try {
+      const response = await authService.searchUsers();
+
+      // Assuming the response contains the list of users
+      const userList = response.data;
+
+      // Map the user data to options for the dropdown
+      const options = userList.map((user) => ({
+        value: user.id,
+        label: user.name,
+      }));
+
+      setUserOptions(options);
+      setSearchResults(options);
+    } catch (error) {
+      console.error('Error fetching list of users:', error);
+    }
+  };
 
   const handleAddChannelClick = () => {
     setIsModalOpen(true);
   };
 
-  const handleAddChannel = async (channelName, userId) => {
-    try {
-      // Create a new channel using the authService
-      const response = await authService.createChannel(channelName, userId);
-      if (response.status === 200) {
-        // Channel creation successful, perform any additional actions if needed
-        console.log('Channel created successfully');
-        setIsModalOpen(false); // Close the modal after channel creation
-      }
-    } catch (error) {
-      // Handle errors, e.g., display an error message to the user
-      console.error('Error creating channel:', error);
-    }
+  const handleAddChannel = async () => {
+    // Implement the channel creation logic here
   };
+
+  const handleSearchUserClick = () => {
+    // Fetch and display all users when the "Search User" button is clicked
+    handleUserSearch();
+  };
+
+  useEffect(() => {
+    // Fetch the list of users when the component mounts
+    handleUserSearch();
+  }, []); // The empty array [] ensures that this effect runs only once
 
   return (
     <div className="sidebar">
@@ -39,7 +60,6 @@ const Sidebar = () => {
             Justin Cantillo
           </h3>
         </div>
-
         <CreateIcon />
       </div>
 
@@ -54,7 +74,7 @@ const Sidebar = () => {
       {isModalOpen && (
         <div className="modal">
           <label>
-           <h4>Enter channel name:</h4>
+            <h4>Enter channel name:</h4>
             <input
               type="text"
               value={channelName}
@@ -62,17 +82,27 @@ const Sidebar = () => {
             />
           </label>
           <label>
-          <h4>Enter user ID:</h4>
+            <h4>Search user:</h4>
             <input
               type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
+              placeholder="Search user..."
             />
+            <button onClick={handleSearchUserClick}>Search User</button>
           </label>
+          <div className="user-search-results">
+            {searchResults.map((userOption) => (
+              <div
+                key={userOption.value}
+                onClick={() => setSelectedUser(userOption)}
+              >
+                {userOption.label}
+              </div>
+            ))}
+          </div>
           <div className="button-container">
-      <button onClick={() => handleAddChannel(channelName, userId)}>Create Channel</button>
-      <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-    </div>
+            <button onClick={handleAddChannel}>Create Channel</button>
+            <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+          </div>
         </div>
       )}
     </div>
