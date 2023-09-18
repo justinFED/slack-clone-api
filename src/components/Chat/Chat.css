@@ -44,7 +44,7 @@
     border-radius: 20px;
     padding: 10px;
     position: sticky; /* Make it sticky */
-    bottom: 5%; /* Stick to the bottom */
+    bottom: 7%; /* Stick to the bottom */
     background-color: white;
     z-index: 1; /* Ensure it appears above messages */
   }

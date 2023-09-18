@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import { FiberManualRecord } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import authService from '../../services/authService';
-import './Sidebar.css'
+import './Sidebar.css';
 
 const Sidebar = () => {
-  const [channels, setChannels] = useState([]); // State to store channel names
-  const [newChannelName, setNewChannelName] = useState(''); // State to store the new channel name
+  const [channels, setChannels] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [channelName, setChannelName] = useState('');
+  const [userId, setUserId] = useState('');
 
-  const handleAddChannel = async () => {
-    if (newChannelName.trim() === '') {
-      return; // Don't add an empty channel name
-    }
+  const handleAddChannelClick = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleAddChannel = async (channelName, userId) => {
     try {
       // Create a new channel using the authService
-      const response = await authService.createChannel(newChannelName.trim());
+      const response = await authService.createChannel(channelName, userId);
       if (response.status === 200) {
-        // Channel creation successful, add it to the state
-        setChannels([...channels, newChannelName.trim()]);
-        // Clear the input field
-        setNewChannelName('');
+        // Channel creation successful, perform any additional actions if needed
         console.log('Channel created successfully');
+        setIsModalOpen(false); // Close the modal after channel creation
       }
     } catch (error) {
       // Handle errors, e.g., display an error message to the user
@@ -47,32 +47,34 @@ const Sidebar = () => {
         <div className="sidebar-text">
           <h2>New Message</h2>
           <hr />
-          {/* Input for entering a new channel name */}
-          <input
-            type="text"
-            placeholder="Enter Channel Name"
-            value={newChannelName}
-            onChange={(e) => setNewChannelName(e.target.value)}
-          />
-          <button onClick={handleAddChannel}>Create Channel</button>
+          <h2 onClick={handleAddChannelClick}>Add Channel</h2>
         </div>
       </div>
 
-      <div className="channels"> {/* Move the channels container here */}
-        {channels.map((channel, index) => (
-          <div key={index}>
-            <h2># {channel}</h2> {/* Add a "#" prefix */}
-          </div>
-        ))}
-      </div>
-
-      <div className="sidebarOption">
-        <div className="sidebar-text">
-          <hr />
-          {/* Add a search box here */}
-          <input type="text" placeholder="Search Channels" />
+      {isModalOpen && (
+        <div className="modal">
+          <label>
+           <h4>Enter channel name:</h4>
+            <input
+              type="text"
+              value={channelName}
+              onChange={(e) => setChannelName(e.target.value)}
+            />
+          </label>
+          <label>
+          <h4>Enter user ID:</h4>
+            <input
+              type="text"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </label>
+          <div className="button-container">
+      <button onClick={() => handleAddChannel(channelName, userId)}>Create Channel</button>
+      <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+    </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
