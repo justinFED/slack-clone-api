@@ -1,0 +1,19 @@
+/* Message.css */
+
+.message {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: auto; /* Push messages to the bottom */
+  }
+  
+  .message-sender {
+    font-weight: bold;
+  }
+  
+  .message-body {
+    margin-top: 5px;
+  }
+  

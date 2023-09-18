@@ -49,3 +49,28 @@
     background-color: white;
     border-radius: 50%;
 }
+
+.sidebarOption {
+
+   width: 100%;
+
+}
+
+.sidebar-text {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    font-size: 12px;
+    cursor: pointer;
+    height: 100%; /* Ensure the content takes up the full height */
+    padding: 10px 0;
+}
+
+.sidebar-text hr {
+    margin: 10px 0 10px 0;
+    border: 1px solid #49274b;
+    width: 100%;
+    
+  
+}

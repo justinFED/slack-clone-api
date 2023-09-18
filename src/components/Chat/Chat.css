@@ -1,0 +1,77 @@
+/* Chat Container */
+.chat {
+    flex: 0.7;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 100%;
+    position: relative;
+  }
+  
+  /* Chat Messages Container */
+  .chat-messages {
+    margin-top: auto;
+    padding: 10px;
+    flex-grow: 1; /* Make the messages container grow to fill the available space */
+  }
+
+/* Chat Header Styles */
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.chat-headerRight > p {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.chat-headerRight > p > .MuiSvgIcon-root {
+    margin-right: 5px !important;
+    font-size: 16px;
+}
+
+/* Chat Input Container */
+.chat-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    padding: 10px;
+    position: sticky; /* Make it sticky */
+    bottom: 5%; /* Stick to the bottom */
+    background-color: white;
+    z-index: 1; /* Ensure it appears above messages */
+  }
+  
+  /* Chat Input Form */
+  .chat-input > form {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    box-sizing: border-box; /* Include padding and border within the specified width */
+  }
+  
+  /* Chat Input Field */
+  .chat-input > form > input {
+    width: 100%;
+    border: 1px solid gray;
+    padding: 15px;
+    margin-right: 10px;
+    box-sizing: border-box; /* Include padding and border within the specified width */
+  }
+  
+  /* Chat Input Button */
+  .chat-input > form > button {
+    margin-left: 10px;
+    padding: 15px;
+    border: none;
+    background-color: #0074cc;
+    color: white;
+    cursor: pointer;
+  }
