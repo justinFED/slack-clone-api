@@ -29,6 +29,45 @@ const authService = {
     }
   },
 
+  createChannel: async (channelName, userIds) => {
+    try {
+      // Get the authentication headers
+      const headers = authService.getAuthHeaders();
+  
+      // Define the request body with the channel name and user_ids
+      const requestBody = {
+        name: channelName,
+        user_ids: userIds, // Pass the array of user IDs
+      };
+  
+      // Make the POST request to create the channel
+      const response = await axios.post(`${API_URL}/channels`, requestBody, {
+        headers,
+      });
+  
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Function to get authentication headers
   getAuthHeaders: () => {
     return {

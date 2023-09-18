@@ -7,7 +7,6 @@ import Chat from './Chat/Chat';
 
 
 
-
 function Home() {
   return (
     <>
@@ -15,7 +14,6 @@ function Home() {
     <div className="app-body">
       <Sidebar />
       <Chat />
-    
     </div>
 
     </>
