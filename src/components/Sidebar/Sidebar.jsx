@@ -3,6 +3,7 @@ import { FiberManualRecord } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import authService from '../../services/authService';
 import { Link } from 'react-router-dom';
+import sendMessageToUser from '../Chat/sendMessageToUser'; // Import sendMessageToUser
 
 import './Sidebar.css';
 
@@ -81,11 +82,17 @@ const Sidebar = () => {
         user: selectedUser.label,
       };
 
-      addChannelToList(newChannel);
+      try {
+        // Use sendMessageToUser to send a message to the selected user
+        await sendMessageToUser(selectedUser.value, `Hello, ${selectedUser.label}!`);
+        addChannelToList(newChannel);
 
-      setChannelName('');
-      setSelectedUser(null);
-      setIsModalOpen(false);
+        setChannelName('');
+        setSelectedUser(null);
+        setIsModalOpen(false);
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
     }
   };
 
@@ -119,6 +126,13 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+      <hr />
+      <h2>Channel List</h2>
+          <ul>
+
+            
+          </ul>
+
         </div>
       </div>
 
@@ -160,7 +174,10 @@ const Sidebar = () => {
           </div>
         </div>
       )}
+       
+        
     </div>
+  
   );
 };
 

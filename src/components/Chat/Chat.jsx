@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
 import './Chat.css';
 import { InfoOutlined } from '@mui/icons-material';
-import { useParams } from 'react-router-dom'; // Import useParams to access route parameters
-import Message from './Message'; // Import the Message component
+import { useParams } from 'react-router-dom';
+import Message from './Message';
+import sendMessageToUser from './sendMessageToUser';
 
-const Chat = () => {
-  const { channelName } = useParams(); // Access the channelName parameter from the route
-  const [messages, setMessages] = useState([]); // State to store messages
-  const [newMessage, setNewMessage] = useState(''); // State to store the new message input
+const Chat = ({ selectedUser }) => { // Receive the selectedUser as a prop
+  const { channelName } = useParams();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
 
-  // Function to send a new message
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (newMessage.trim() === '') {
-      return; // Prevent sending empty messages
+      return;
     }
 
-    // Create a new message object and add it to the messages state
-    const message = {
-      sender: 'User1', // Replace with the actual sender's name or ID
-      body: newMessage, // Use the content from the input
-    };
+    try {
+      // Use the selectedUser's ID to send a message
+      await sendMessageToUser(selectedUser, newMessage);
 
-    setMessages([...messages, message]);
-    setNewMessage(''); // Clear the input field after sending
+      const message = {
+        sender: 'User1',
+        body: newMessage,
+      };
+
+      setMessages([...messages, message]);
+      setNewMessage('');
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
+
 
   return (
     <div className="chat">

@@ -63,7 +63,6 @@ const authService = {
       throw error;
     }
   },
-  
 
   createChannel: async (channelName, userIds) => {
     try {
@@ -90,7 +89,36 @@ const authService = {
       throw error;
     }
   },
-  
+
+  getAllUserChannels: async () => {
+    try {
+      const accessToken = localStorage.getItem('access-token');
+      const client = localStorage.getItem('client');
+      const expiry = localStorage.getItem('expiry');
+      const uid = localStorage.getItem('uid');
+
+      if (!accessToken || !client || !expiry || !uid) {
+        // Handle the case where authentication headers are missing
+        throw new Error('Authentication headers are missing');
+      }
+
+      const authHeaders = {
+        'access-token': accessToken,
+        'client': client,
+        'expiry': expiry,
+        'uid': uid,
+      };
+
+      const response = await axiosInstance.get('/channels', {
+        headers: authHeaders,
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
 };
 
 export default authService;

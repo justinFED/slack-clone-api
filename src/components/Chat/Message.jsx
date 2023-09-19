@@ -6,8 +6,8 @@ const Message = ({ message }) => {
 
   return (
     <div className="message">
-      {/* <div className="message-sender">{message.sender}</div>
-      <div className="message-body">{message.body}</div> */}
+      <div className="message-sender">{message.sender}</div>
+      <div className="message-body">{message.body}</div>
     </div>
   );
 };
