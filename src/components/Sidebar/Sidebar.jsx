@@ -12,7 +12,13 @@ const Sidebar = () => {
   const [userOptions, setUserOptions] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showSearchResults, setShowSearchResults] = useState(true); // Initially show search results
+  const [showSearchResults, setShowSearchResults] = useState(true);
+
+  const [createdChannels, setCreatedChannels] = useState([]);
+
+  const addChannelToList = (channel) => {
+    setCreatedChannels((prevChannels) => [...prevChannels, channel]);
+  };
 
   const handleUserSearch = async () => {
     try {
@@ -25,15 +31,12 @@ const Sidebar = () => {
 
       const response = await authService.searchUsers(authHeaders);
 
-      // Assuming the response contains the list of users
       const userList = response.data;
 
-      // Filter the user list based on the search term
       const filteredUsers = userList.filter((user) =>
         user.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
-      // Map the filtered user data to options for the dropdown
       const options = filteredUsers.map((user) => ({
         value: user.id,
         label: user.email,
@@ -41,7 +44,7 @@ const Sidebar = () => {
 
       setUserOptions(options);
       setSearchResults(options);
-      setShowSearchResults(true); // Show search results when there are results
+      setShowSearchResults(true);
     } catch (error) {
       console.error('Error fetching list of users:', error);
     }
@@ -52,39 +55,43 @@ const Sidebar = () => {
     setSearchTerm(newSearchTerm);
 
     if (newSearchTerm === '') {
-      // Clear search results and hide them when the search input is empty
       setSearchResults([]);
       setShowSearchResults(false);
     } else {
-      // Otherwise, perform the user search
       handleUserSearch();
     }
-  };
-
-  const handleUserClick = (userOption) => {
-    setSelectedUser(userOption);
-    setSearchTerm(userOption.label); // Populate the search input with the user's email
-    setSearchResults([]); // Clear the search results
-    setShowSearchResults(false); // Hide the search results when a user is selected
   };
 
   const handleAddChannelClick = () => {
     setIsModalOpen(true);
   };
 
-  const handleAddChannel = async () => {
-    // Implement the channel creation logic here
-    if (selectedUser && channelName) {
-      console.log(`Creating channel "${channelName}" for user ${selectedUser.label}`);
-    }
+  // Define the missing handleUserClick function
+  const handleUserClick = (userOption) => {
+    setSelectedUser(userOption);
+    setSearchTerm(userOption.label);
+    setSearchResults([]);
+    setShowSearchResults(false);
+  };
 
-    setIsModalOpen(false);
+  const handleAddChannel = async () => {
+    if (selectedUser && channelName) {
+      const newChannel = {
+        name: channelName,
+        user: selectedUser.label,
+      };
+
+      addChannelToList(newChannel);
+
+      setChannelName('');
+      setSelectedUser(null);
+      setIsModalOpen(false);
+    }
   };
 
   useEffect(() => {
-    // Fetch the list of users when the component mounts
     handleUserSearch();
-  }, []); // The empty array [] ensures that this effect runs only once
+  }, []);
 
   return (
     <div className="sidebar">
@@ -106,10 +113,9 @@ const Sidebar = () => {
           <h2 onClick={handleAddChannelClick}>Add Channel</h2>
           <hr />
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            {createdChannels.map((channel, index) => (
+              <li key={index}>{channel.name} (User: {channel.user})</li>
+            ))}
           </ul>
         </div>
       </div>
@@ -133,7 +139,7 @@ const Sidebar = () => {
               onChange={handleSearchInputChange}
             />
           </label>
-          {showSearchResults && ( // Conditionally render search results
+          {showSearchResults && (
             <div className="user-search-results">
               {searchResults.map((userOption) => (
                 <div
