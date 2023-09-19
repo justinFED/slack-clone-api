@@ -80,9 +80,11 @@ const authService = {
     }
   },
 
-  searchUsers: async () => {
+  searchUsers: async (authHeaders) => {
     try {
-      const response = await axiosInstance.get('/users');
+      const response = await axiosInstance.get('/users', {
+        headers: authHeaders,
+      });
       return response.data;
     } catch (error) {
       throw error;

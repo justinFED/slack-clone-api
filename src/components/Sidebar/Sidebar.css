@@ -158,3 +158,29 @@
     background-color: #0056b3;
   }
   
+
+  /* Search bar */
+
+  /* Add these styles to your component's CSS file */
+  .user-search-results {
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  .user-search-results div {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: black; /* Text color set to black */
+  }
+  
+  .user-search-results div:hover {
+    background-color: #f2f2f2;
+  }
