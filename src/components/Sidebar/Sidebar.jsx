@@ -66,7 +66,6 @@ const Sidebar = () => {
     setIsModalOpen(true);
   };
 
-  // Define the missing handleUserClick function
   const handleUserClick = (userOption) => {
     setSelectedUser(userOption);
     setSearchTerm(userOption.label);
@@ -112,9 +111,9 @@ const Sidebar = () => {
           <hr />
           <h2 onClick={handleAddChannelClick}>Add Channel</h2>
           <hr />
-          <ul>
+          <ul className="channel-list"> {/* Added a class name for styling */}
             {createdChannels.map((channel, index) => (
-              <li key={index}>{channel.name} (User: {channel.user})</li>
+              <li key={index}># {channel.name}</li>
             ))}
           </ul>
         </div>

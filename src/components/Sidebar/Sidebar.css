@@ -157,6 +157,11 @@
   .modal button:hover {
     background-color: #0056b3;
   }
+
+  .channel-list {
+    list-style: none; /* Removes the list-style marker */
+    font-size: 17px;
+  }
   
 
   /* Search bar */

@@ -13,7 +13,6 @@ function Home() {
     <Header />
     <div className="app-body">
       <Sidebar />
-      <Chat />
     </div>
 
     </>
