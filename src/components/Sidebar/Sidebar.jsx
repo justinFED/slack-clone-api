@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FiberManualRecord } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import authService from '../../services/authService';
+import { Link } from 'react-router-dom';
 
 import './Sidebar.css';
 
@@ -111,11 +112,13 @@ const Sidebar = () => {
           <hr />
           <h2 onClick={handleAddChannelClick}>Add Channel</h2>
           <hr />
-          <ul className="channel-list"> {/* Added a class name for styling */}
-            {createdChannels.map((channel, index) => (
-              <li key={index}># {channel.name}</li>
-            ))}
-          </ul>
+          <ul className="channel-list">
+        {createdChannels.map((channel, index) => (
+          <li key={index}>
+            <Link to={`/channel/${channel.name}`}># {channel.name}</Link>
+          </li>
+        ))}
+      </ul>
         </div>
       </div>
 

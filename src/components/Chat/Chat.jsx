@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './Chat.css';
 import { InfoOutlined } from '@mui/icons-material';
+import { useParams } from 'react-router-dom'; // Import useParams to access route parameters
 import Message from './Message'; // Import the Message component
 
 const Chat = () => {
+  const { channelName } = useParams(); // Access the channelName parameter from the route
   const [messages, setMessages] = useState([]); // State to store messages
   const [newMessage, setNewMessage] = useState(''); // State to store the new message input
 
@@ -28,7 +30,7 @@ const Chat = () => {
       <div className="chat-header">
         <div className="chat-headerLeft">
           <h4 className="chat-channelName">
-            <strong># general</strong>
+            <strong># {channelName}</strong> {/* Display the channelName from the route */}
           </h4>
         </div>
 
