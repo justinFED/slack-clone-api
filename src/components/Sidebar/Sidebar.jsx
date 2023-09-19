@@ -77,24 +77,33 @@ const Sidebar = () => {
 
   const handleAddChannel = async () => {
     if (selectedUser && channelName) {
-      const newChannel = {
-        name: channelName,
-        user: selectedUser.label,
-      };
-
-      try {
-        // Use sendMessageToUser to send a message to the selected user
-        await sendMessageToUser(selectedUser.value, `Hello, ${selectedUser.label}!`);
-        addChannelToList(newChannel);
-
-        setChannelName('');
-        setSelectedUser(null);
-        setIsModalOpen(false);
-      } catch (error) {
-        console.error('Error sending message:', error);
+      // Check if the channel name already exists in createdChannels
+      const isChannelNameTaken = createdChannels.some((channel) => channel.name === channelName);
+  
+      if (isChannelNameTaken) {
+        // Display an error message or handle the duplicate channel name case
+        window.alert('Channel name is already taken.');
+      } else {
+        const newChannel = {
+          name: channelName,
+          user: selectedUser.label,
+        };
+  
+        try {
+          // Use sendMessageToUser to send a message to the selected user
+          await sendMessageToUser(selectedUser.value, `Hello, ${selectedUser.label}!`);
+          addChannelToList(newChannel);
+  
+          setChannelName('');
+          setSelectedUser(null);
+          setIsModalOpen(false);
+        } catch (error) {
+          console.error('Error sending message:', error);
+        }
       }
     }
   };
+  
 
   useEffect(() => {
     handleUserSearch();
@@ -130,7 +139,7 @@ const Sidebar = () => {
       <h2>Channel List</h2>
           <ul>
 
-            
+
           </ul>
 
         </div>

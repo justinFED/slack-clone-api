@@ -161,6 +161,40 @@
   .channel-list {
     list-style: none; /* Removes the list-style marker */
     font-size: 17px;
+    text-decoration: none;
+    color: white;
+  }
+
+  ul.channel-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Style each channel item */
+  ul.channel-list li {
+    margin: 4px 0;
+  }
+  
+  /* Style the channel link */
+  ul.channel-list li a {
+    text-decoration: none;
+    color: white; /* Change to your desired text color */
+    font-weight: bold;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Hover effect for channel links */
+  ul.channel-list li a:hover {
+    background-color: #f0f0f0; /* Change to your desired hover background color */
+  }
+  
+  /* Style for the selected channel */
+  ul.channel-list li a.selected {
+    background-color: #007bff; /* Change to your desired selected channel background color */
+    color: #fff; /* Change to your desired text color */
   }
   
 
