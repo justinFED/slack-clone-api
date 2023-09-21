@@ -1,11 +1,11 @@
-.register {
+.login {
     height: 100vh;
     background: #f8f8f8;
     display: grid;
     place-items: center;
 }
 
-.reg-container {
+.log-container {
     padding: 100px;
     text-align: center;
     background-color: white;
@@ -15,13 +15,13 @@
     width: 400px;
 }
 
-.reg-container img {
+.log-container img {
     object-fit: contain;
     height: 100px;
     margin-bottom: 20px;
 }
 
-.signup-header {
+.log-header {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
@@ -37,7 +37,6 @@ label {
     margin-bottom: 6px;
 }
 
-
 input {
     width: 100%;
     padding: 10px;
@@ -46,7 +45,7 @@ input {
     font-size: 16px;
 }
 
-.register-button {
+.log-button {
     background: #007bff;
     color: #fff;
     border: none;
@@ -56,6 +55,6 @@ input {
     cursor: pointer;
 }
 
-.register-button:hover {
+.log-button:hover {
     background: #0056b3;
 }

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from '../../services/authService';
+import './Login.css'
+import logo from '../../assets/logo.png'
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -25,25 +27,34 @@ function Login() {
   }
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
+    <div className="login">
+    <div className="log-container">
+      <img src={logo} alt="" />
+      <h2 className="log-header">Login</h2>
       {error && <div className="error">{error}</div>}
+      <div className="form-group">
+        <label>Email</label>
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      </div>
+      <div className="form-group">
+      <label>Password</label>
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button>
+      </div>
+      <button className="log-button" onClick={handleLogin}>Login</button>
       <p>
         Don't have an account? <Link to="/register">Register</Link>
       </p>
+    </div>
     </div>
   );
 }

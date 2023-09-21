@@ -29,13 +29,13 @@ function Register() {
 
   return (
     <div className="register">
-    <div className="auth-container">
+    <div className="reg-container">
     <img src={logo} alt="logo" />
       <h2 className="signup-header">Register</h2>
 
       {error && <div className="error">{error}</div>}
       <div className="form-group">
-        <label className="register-label">Email</label>
+        <label>Email</label>
       <input
         type="email"
         placeholder="Email"
