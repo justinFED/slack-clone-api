@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
+import './Register.css'
+import logo from '../../assets/logo.png'
+
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -11,11 +14,10 @@ function Register() {
 
   const handleRegister = async () => {
     try {
-      const response = await authService.register(email, password, confirmPassword); // Use authService for registration
+      const response = await authService.register(email, password, confirmPassword);
   
-      // Check if registration was successful (you may need to adjust this based on your authService implementation)
       if (response.status === 200) {
-        navigate('/login'); // Redirect to the login page
+        navigate('/login');
       } else {
         setError('Registration failed');
       }
@@ -26,32 +28,47 @@ function Register() {
   }
 
   return (
+    <div className="register">
     <div className="auth-container">
-      <h2>Register</h2>
+    <img src={logo} alt="logo" />
+      <h2 className="signup-header">Register</h2>
+
       {error && <div className="error">{error}</div>}
+      <div className="form-group">
+        <label className="register-label">Email</label>
       <input
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
+      </div>
+      <div className="form-group">
+      <label>Password</label>
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      </div>
+      <div className="form-group">
+      <label>Confirm Password</label>
       <input
         type="password"
         placeholder="Confirm Password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
-      <button onClick={handleRegister}>Register</button>
+      </div>
+      <button className="register-button" onClick={handleRegister}>Register</button>
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
     </div>
+   
+    </div>
+   
   );
 }
 
