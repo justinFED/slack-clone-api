@@ -12,13 +12,14 @@ function Home() {
       <Header />
       <div className="app-body">
         <Sidebar />
-       
+        
         <Routes>
           <Route path="/channel/:channelName" element={<Chat />} />
         </Routes>
-        <ChannelsList />
       </div>
+     
     </div>
+    
   );
 }
 

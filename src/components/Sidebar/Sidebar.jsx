@@ -3,7 +3,8 @@ import { FiberManualRecord } from '@mui/icons-material';
 import CreateIcon from '@mui/icons-material/Create';
 import authService from '../../services/authService';
 import { Link } from 'react-router-dom';
-import sendMessageToUser from '../Chat/sendMessageToUser'; // Import sendMessageToUser
+import sendMessageToUser from '../Chat/sendMessageToUser';
+import ChannelsList from '../Channels/ChannelList';
 
 import './Sidebar.css';
 
@@ -136,12 +137,7 @@ const Sidebar = () => {
         ))}
       </ul>
       <hr />
-      <h2>Channel List</h2>
-          <ul>
-
-
-          </ul>
-
+      <ChannelsList />
         </div>
       </div>
 

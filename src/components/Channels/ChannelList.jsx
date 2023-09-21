@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import authService from '../../services/authService'; // Import authService
+import authService from '../../services/authService';
 
 function ChannelsList() {
   const [userChannels, setUserChannels] = useState([]);
@@ -12,7 +12,6 @@ function ChannelsList() {
         setUserChannels(channels);
         setIsLoading(false);
       } catch (error) {
-        // Handle error (e.g., display an error message)
         console.error('Error fetching user channels:', error);
         setIsLoading(false);
       }
@@ -23,7 +22,7 @@ function ChannelsList() {
 
   return (
     <div>
-      <h2>Channels</h2>
+      <h2>Channel List</h2>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
