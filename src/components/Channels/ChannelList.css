@@ -1,0 +1,41 @@
+/* Style for the entire container */
+.channel-list-container {
+    margin: 20px;
+  }
+  
+
+  .channel-list-heading {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+
+  .channel-list-search-input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+
+  .channel-list-loading {
+    font-size: 16px;
+  }
+  
+
+  .channel-list-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+
+  .channel-list-no-channels {
+    font-size: 16px;
+    color: #f00; 
+  }
+  

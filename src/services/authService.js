@@ -113,7 +113,6 @@ const authServiceMethods = {
       const response = await authService.get('/channels', {
         headers: authHeaders,
       });
-
       return response.data;
     } catch (error) {
       throw error;
@@ -156,6 +155,34 @@ const authServiceMethods = {
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      throw error;
+    }
+  },
+
+  getChannelDetails: async (channelId) => {
+    try {
+      const accessToken = localStorage.getItem('access-token');
+      const client = localStorage.getItem('client');
+      const expiry = localStorage.getItem('expiry');
+      const uid = localStorage.getItem('uid');
+
+      if (!accessToken || !client || !expiry || !uid) {
+        throw new Error('Authentication headers are missing');
+      }
+
+      const authHeaders = {
+        'access-token': accessToken,
+        'client': client,
+        'expiry': expiry,
+        'uid': uid,
+      };
+
+      const response = await authService.get(`/channels/${channelId}`, {
+        headers: authHeaders,
+      });
+
+      return response.data;
+    } catch (error) {
       throw error;
     }
   },
