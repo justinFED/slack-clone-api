@@ -3,21 +3,27 @@ import './Chat.css';
 import { InfoOutlined } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import Message from './Message';
-import authService from '../../services/authService';
+import authServiceMethods from '../../services/authService';
 
 const Chat = ({ sendMessageToUser }) => {
-  const { channelName, selectedUserId } = useParams();
+  const { selectedUserId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
   const fetchMessages = async (receiverId) => {
     try {
-      const response = await authService.fetchMessages(receiverId);
+      const response = await authServiceMethods.fetchMessages(receiverId);
 
-      if (response.status === 200) {
-        setMessages(response.data);
+      if (response && response.data && Array.isArray(response.data)) {
+        const filteredMessages = response.data.filter(
+          (message) =>
+            message.body !== 'Your message here' &&
+            new Date(message.timestamp).toString() !== 'Invalid Date'
+        );
+
+        setMessages(filteredMessages);
       } else {
-        console.error('Failed to fetch messages:', response);
+        console.error('Invalid response format:', response);
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -30,21 +36,24 @@ const Chat = ({ sendMessageToUser }) => {
     }
   }, [selectedUserId]);
 
-
   const sendMessage = async () => {
     try {
       if (selectedUserId !== undefined) {
         const timestamp = Date.now();
-  
-        await authService.sendMessageToUser(selectedUserId, newMessage, timestamp);
-  
+
         const newMessageObj = {
-          body: newMessage,
-          isSelf: true,
-          timestamp: timestamp,
+          body: newMessage, 
+          timestamp: timestamp, 
         };
-        setMessages([...messages, newMessageObj]);
-  
+
+        setMessages((prevMessages) => [...prevMessages, newMessageObj]);
+
+        await authServiceMethods.sendMessageToUser(
+          selectedUserId,
+          newMessage,
+          timestamp
+        );
+
         setNewMessage('');
       } else {
         console.error('Invalid selected user ID:', selectedUserId);
@@ -53,32 +62,21 @@ const Chat = ({ sendMessageToUser }) => {
       console.error('Error sending message:', error);
     }
   };
-  
-
-  if (!channelName) {
-    return null;
-  }
 
   return (
     <div className="chat">
-      <div className="chat-header">
-        <div className="chat-headerLeft">
-          <h4 className="chat-channelName">
-            <strong># {channelName}</strong>
-          </h4>
-        </div>
-        <div className="chat-headerRight">
-          <p>
-            <InfoOutlined /> Details
-          </p>
-        </div>
-      </div>
-
       <div className="chat-messages">
-  {messages.map((message, index) => (
-    <Message key={index} message={message} timestamp={message.timestamp} />
-  ))}
-</div>
+        {messages.length > 0 ? (
+          messages.map((message, index) => (
+            <Message
+              key={index}
+              message={message}
+            />
+          ))
+        ) : (
+          <p></p>
+        )}
+      </div>
 
       <div className="chat-input">
         <form>

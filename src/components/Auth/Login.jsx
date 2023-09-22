@@ -12,11 +12,11 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await authService.login(email, password); // Use authService for login
+      const response = await authService.login(email, password);
   
-      // Check if login was successful (you may need to adjust this based on your authService implementation)
+      
       if (response.status === 200) {
-        navigate('/home'); // Redirect to the home or chat page
+        navigate('/home');
       } else {
         setError('Invalid email or password');
       }

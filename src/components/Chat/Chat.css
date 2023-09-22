@@ -9,11 +9,11 @@
     position: relative;
   }
   
-  /* Chat Messages Container */
+
   .chat-messages {
     margin-top: auto;
     padding: 10px;
-    flex-grow: 1; /* Make the messages container grow to fill the available space */
+    flex-grow: 1; 
   }
 
 /* Chat Header Styles */
@@ -43,10 +43,10 @@
     justify-content: space-between;
     border-radius: 20px;
     padding: 10px;
-    position: sticky; /* Make it sticky */
-    bottom: 7%; /* Stick to the bottom */
+    position: sticky; 
+    bottom: 7%; 
     background-color: white;
-    z-index: 1; /* Ensure it appears above messages */
+    z-index: 1; 
   }
   
   /* Chat Input Form */
@@ -54,7 +54,7 @@
     display: flex;
     flex-grow: 1;
     justify-content: center;
-    box-sizing: border-box; /* Include padding and border within the specified width */
+    box-sizing: border-box; 
   }
   
   /* Chat Input Field */
@@ -63,7 +63,7 @@
     border: 1px solid gray;
     padding: 15px;
     margin-right: 10px;
-    box-sizing: border-box; /* Include padding and border within the specified width */
+    box-sizing: border-box;
   }
   
   /* Chat Input Button */

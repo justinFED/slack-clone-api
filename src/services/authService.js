@@ -48,6 +48,15 @@ const authServiceMethods = {
     }
   },
 
+  get: async (url, config) => {
+    try {
+      const response = await authService.get(url, config);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   login: async (email, password) => {
     try {
       const response = await authService.post('/auth/sign_in', {
@@ -186,7 +195,7 @@ const authServiceMethods = {
       throw error;
     }
   },
-  
+
 };
 
 export default authServiceMethods;
