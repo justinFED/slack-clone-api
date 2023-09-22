@@ -4,6 +4,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import authService from "../../services/authService"; // Import authService
 import { Link } from "react-router-dom";
 import ChannelsList from "../Channels/ChannelList";
+import NewMessage from "../NewMessage/NewMessage"; 
 
 import "./Sidebar.css";
 
@@ -133,8 +134,8 @@ const createChannel = async (channelName, selectedUserEmail) => {
       </div>
 
       <div className="sidebarOption">
-        <div className="sidebar-text">
-          <h2>New Message</h2>
+  <div className="sidebar-text">
+    <NewMessage />
           <hr />
           <h2 onClick={handleAddChannelClick}>Add Channel</h2>
           <ul className="channel-list">
