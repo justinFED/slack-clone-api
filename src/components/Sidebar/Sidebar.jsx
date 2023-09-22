@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiberManualRecord } from "@mui/icons-material";
 import CreateIcon from "@mui/icons-material/Create";
-import authService from "../../services/authService"; // Import authService
+import authService from "../../services/authService";
 import { Link } from "react-router-dom";
 import ChannelsList from "../Channels/ChannelList";
 import NewMessage from "../NewMessage/NewMessage"; 
@@ -73,15 +73,12 @@ const createChannel = async (channelName, selectedUserEmail) => {
     ]);
 
     if (channelResponse.status === 200) {
-      // Handle success, e.g., update the UI or display a success message
       console.log("Channel created successfully.");
 
       const createdChannel = {
-        name: channelName, // Ensure that the 'name' property is correctly set
-        // Add other properties if needed
+        name: channelName,
       };
 
-      // Optionally, you can add the created channel to your state or perform other actions
       addChannelToList(createdChannel);
 
       setIsModalOpen(false);
@@ -100,7 +97,7 @@ const createChannel = async (channelName, selectedUserEmail) => {
 
   const handleUserClick = (userOption) => {
     console.log("Selected User:", userOption);
-    setSelectedUser(userOption.value); // Set selectedUser with the user's ID
+    setSelectedUser(userOption.value); 
     setSearchTerm(userOption.label);
     setSearchResults([]);
     setShowSearchResults(false);
@@ -108,7 +105,7 @@ const createChannel = async (channelName, selectedUserEmail) => {
 
   const handleAddChannel = async () => {
     if (channelName && selectedUser) {
-      createChannel(channelName, selectedUser.label); // Call the createChannel function
+      createChannel(channelName, selectedUser.label);
     } else {
       console.error(
         "Invalid input: Either selectedUser or channelName is missing."
@@ -141,7 +138,6 @@ const createChannel = async (channelName, selectedUserEmail) => {
           <ul className="channel-list">
             {createdChannels.map((channel, index) => (
               <li key={index}>
-                {/* Create a link to the chat interface for the channel */}
                 <Link
                   to={`/channel/${channel.name}/user/${
                     selectedUser ? selectedUser.value : ""

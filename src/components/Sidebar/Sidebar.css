@@ -83,7 +83,7 @@
     align-self: flex-start;
     margin: 5px 0;
     padding-left: 20px;
-    text-align: left; /* Align the text to the left */
+    text-align: left; 
     font-weight: 400;
   }
   
@@ -98,20 +98,16 @@
     padding: 20px;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px; /* Adjust the width as needed */
-    width: 90%; /* Responsive width */
+    max-width: 400px; 
+    width: 90%; 
     z-index: 1000;
-     /* Initially, hide the dropdown */
-   /* Position the dropdown below the input */
- 
   }
   
-  /* Style for the modal title */
   .modal h4 {
     padding-bottom: 10px;
   }
   
-  /* Style for input fields */
+ 
   .modal label {
     display: block;
     margin-bottom: 10px;
@@ -130,10 +126,9 @@
   .button-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px; /* Adjust the margin as needed */
+    margin-top: 20px;
   }
   
-  /* Style for buttons in the modal */
   .modal button {
     padding: 10px 20px;
     background-color: #007bff;
@@ -145,14 +140,13 @@
   }
 
   .modal button:nth-child(1) {
-    margin-right: 10px; /* Adjust the margin as needed */
+    margin-right: 10px; 
   }
 
   .modal button:nth-child(2) {
-    margin-left: 10px; /* Adjust the margin as needed */
+    margin-left: 10px; 
   }
-  
-  /* Button hover effect */
+
   .modal button:hover {
     background-color: #0056b3;
   }
@@ -162,7 +156,7 @@
   }
 
   .channel-list {
-    list-style: none; /* Removes the list-style marker */
+    list-style: none; 
     font-size: 17px;
     text-decoration: none;
     color: white;
@@ -179,32 +173,28 @@
   }
   
   /* Style the channel link */
-  ul.channel-list li a {
+ul.channel-list li a {
     text-decoration: none;
-    color: white; /* Change to your desired text color */
+    color: white; 
     font-weight: bold;
     display: block;
     padding: 8px 12px;
     border-radius: 4px;
     transition: background-color 0.2s ease;
-  }
+}
   
   /* Hover effect for channel links */
-  ul.channel-list li a:hover {
-    background-color: #f0f0f0; /* Change to your desired hover background color */
-  }
+ul.channel-list li a:hover {
+  background-color: #f0f0f0; /* Change to your desired hover background color */
+}
   
   /* Style for the selected channel */
-  ul.channel-list li a.selected {
-    background-color: #007bff; /* Change to your desired selected channel background color */
-    color: #fff; /* Change to your desired text color */
-  }
+ul.channel-list li a.selected {
+    background-color: #007bff; 
+    color: #fff; 
+}
   
-
   /* Search bar */
-
-  /* Add these styles to your component's CSS file */
-/* Updated Styles for user-search-results */
 .user-search-results {
   position: absolute;
   z-index: 1;
@@ -215,21 +205,20 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
   border-radius: 4px;
-  top: 100%; /* Position the container below its parent */
-  left: 0; /* Align the container with the left edge of its parent */
+  top: 100%; 
+  left: 0; 
 }
 
-  
-  .user-search-results div {
+.user-search-results div {
     padding: 8px 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    color: black; /* Text color set to black */
-  }
+    color: black;
+}
   
-  .user-search-results div:hover {
+.user-search-results div:hover {
     background-color: #f2f2f2;
-  }
+}
 
 
   /* New Message Modal */
@@ -242,19 +231,15 @@
     padding: 20px;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px; /* Adjust the width as needed */
-    width: 90%; /* Responsive width */ 
+    max-width: 400px; 
+    width: 90%; 
   z-index: 1000;
   color: black;
 }
 
-/* Style for the modal title */
 .new-message-modal h1 {
   padding-bottom: 10px;
 }
-
-/* Style for input fields in the modal */
-
 
 .new-message-modal input[type="text"] {
   width: 95%;
@@ -264,7 +249,6 @@
   margin-bottom: 15px;
 }
 
-/* Style for buttons in the modal */
 .new-message-modal button {
   padding: 10px 20px;
   background-color: #007bff;
@@ -276,24 +260,21 @@
 }
 
 .new-message-modal button:nth-child(1) {
-  margin-right: 10px; /* Adjust the margin as needed */
+  margin-right: 10px; 
 }
 
 .new-message-modal button:nth-child(2) {
-  margin-left: 10px; /* Adjust the margin as needed */
-}
-
-/* Button hover effect */
-.new-message-modal button:hover {
-  background-color: #0056b3;
+  margin-left: 10px; 
 }
 
 .new-message-modal button:hover {
   background-color: #0056b3;
 }
 
-/* Dropdown Styles */
-/* Dropdown Styles */
+.new-message-modal button:hover {
+  background-color: #0056b3;
+}
+
 .user-search-dropdown {
   position: absolute;
   z-index: 1;
@@ -304,21 +285,20 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
   border-radius: 4px;
-  display: none; /* Initially, hide the dropdown */
-  top: 100%; /* Position the dropdown below the input */
-  left: 0; /* Align the dropdown with the left edge of the input */
+  display: none; 
+  top: 100%; 
+  left: 0; 
 }
 
-
 .user-search-dropdown.active {
-  display: block; /* Show the dropdown when active */
+  display: block;
 }
 
 .user-search-dropdown div {
   padding: 8px 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  color: black; /* Text color set to black */
+  color: black;
 }
 
 .user-search-dropdown div:hover {

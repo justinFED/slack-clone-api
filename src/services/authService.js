@@ -9,7 +9,6 @@ const authService = axios.create({
   },
 });
 
-// Add an interceptor to set authentication headers for requests
 authService.interceptors.request.use(
   async (config) => {
     try {
@@ -101,7 +100,6 @@ const authServiceMethods = {
       const uid = localStorage.getItem('uid');
 
       if (!accessToken || !client || !expiry || !uid) {
-        // Handle the case where authentication headers are missing
         throw new Error('Authentication headers are missing');
       }
 
@@ -124,11 +122,10 @@ const authServiceMethods = {
 
   fetchMessages: async (receiverId) => {
     try {
-      // Make a GET request to retrieve messages
       const response = await authService.get('/messages', {
         params: {
           receiver_id: receiverId,
-          receiver_class: 'User', // Assuming this is for direct messages
+          receiver_class: 'User',
         },
       });
 
@@ -140,27 +137,26 @@ const authServiceMethods = {
 
   sendMessageToUser: async (receiverId, body) => {
     try {
-      // Prepare the message data
+
       const messageData = {
         receiver_id: receiverId,
-        receiver_class: 'User', // Assuming this is for direct messages
+        receiver_class: 'User', 
         body: body,
       };
   
-      // Make a POST request to send the message
+ 
       const response = await authService.post('/messages', messageData);
   
-      // Check the response status and handle accordingly
+ 
       if (response.status === 200) {
         console.log('Message sent successfully.');
-        return response.data; // You can return the message data if needed
+        return response.data; 
       } else {
         console.error('Failed to send message:', response);
-        // Handle the error, show an error message, or retry the operation
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      throw error; // Rethrow the error for higher-level handling if needed
+      throw error;
     }
   },
   

@@ -15,14 +15,12 @@ function Home() {
       <div className="app-body">
         <Sidebar />
         <Routes>
-          {/* Define a route for the chat interface */}
           <Route
             path="/channel/:channelName/user/:selectedUserId"
             element={<Chat />}
           />
         </Routes>
       </div>
-      {/* Conditionally render the NewMessage modal */}
       {isModalOpen && <NewMessage setIsModalOpen={setIsModalOpen} />}
     </div>
   );

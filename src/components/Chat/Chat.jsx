@@ -5,13 +5,11 @@ import { useParams } from 'react-router-dom';
 import Message from './Message';
 import authService from '../../services/authService';
 
-const Chat = () => {
+const Chat = ({ sendMessageToUser }) => {
   const { channelName, selectedUserId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  
 
-  // Function to fetch existing messages
   const fetchMessages = async (receiverId) => {
     try {
       const response = await authService.fetchMessages(receiverId);
@@ -26,28 +24,24 @@ const Chat = () => {
     }
   };
 
-  // Call fetchMessages when the component mounts and when selectedUserId changes
   useEffect(() => {
     if (selectedUserId) {
       fetchMessages(selectedUserId);
     }
   }, [selectedUserId]);
 
-  // Function to send a new message
+
   const sendMessage = async () => {
     try {
       if (selectedUserId !== undefined) {
-        // Send the new message
         await authService.sendMessageToUser(selectedUserId, newMessage);
         
-        // Update the messages state with the new message
         const newMessageObj = {
           body: newMessage,
-          isSelf: true, // Assuming the message is from the user
+          isSelf: true,
         };
         setMessages([...messages, newMessageObj]);
 
-        // Clear the input field
         setNewMessage('');
       } else {
         console.error('Invalid selected user ID:', selectedUserId);
@@ -57,9 +51,8 @@ const Chat = () => {
     }
   };
 
-  // Conditionally render the chat only if a channelName is defined
   if (!channelName) {
-    return null; // Return null if there's no channelName
+    return null;
   }
 
   return (
@@ -67,7 +60,6 @@ const Chat = () => {
       <div className="chat-header">
         <div className="chat-headerLeft">
           <h4 className="chat-channelName">
-            {/* Display the channel name */}
             <strong># {channelName}</strong>
           </h4>
         </div>
