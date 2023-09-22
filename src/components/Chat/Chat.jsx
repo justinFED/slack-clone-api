@@ -34,14 +34,17 @@ const Chat = ({ sendMessageToUser }) => {
   const sendMessage = async () => {
     try {
       if (selectedUserId !== undefined) {
-        await authService.sendMessageToUser(selectedUserId, newMessage);
-        
+        const timestamp = Date.now();
+  
+        await authService.sendMessageToUser(selectedUserId, newMessage, timestamp);
+  
         const newMessageObj = {
           body: newMessage,
           isSelf: true,
+          timestamp: timestamp,
         };
         setMessages([...messages, newMessageObj]);
-
+  
         setNewMessage('');
       } else {
         console.error('Invalid selected user ID:', selectedUserId);
@@ -50,6 +53,7 @@ const Chat = ({ sendMessageToUser }) => {
       console.error('Error sending message:', error);
     }
   };
+  
 
   if (!channelName) {
     return null;
@@ -71,10 +75,10 @@ const Chat = ({ sendMessageToUser }) => {
       </div>
 
       <div className="chat-messages">
-        {messages.map((message, index) => (
-          <Message key={index} message={message} />
-        ))}
-      </div>
+  {messages.map((message, index) => (
+    <Message key={index} message={message} timestamp={message.timestamp} />
+  ))}
+</div>
 
       <div className="chat-input">
         <form>
