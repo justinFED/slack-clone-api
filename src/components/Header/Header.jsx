@@ -1,7 +1,8 @@
 import './Header.css'
 import { Avatar } from '@mui/material';
-import { AccessTime, HelpOutline } from '@mui/icons-material';
+import { AccessTime } from '@mui/icons-material';
 import { Search } from '@mui/icons-material';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Header = () => {
   return (
@@ -19,7 +20,7 @@ const Header = () => {
             <input placeholder='Search here'/>
       </div>
       <div className="div header-right">
-        <HelpOutline />
+        <LogoutIcon />
       </div>
     </div>
   )

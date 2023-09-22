@@ -2,8 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'http://206.189.91.54/api/v1';
 
-// Create an Axios instance with default headers
-const axiosInstance = axios.create({
+const authService = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -11,31 +10,35 @@ const axiosInstance = axios.create({
 });
 
 // Add an interceptor to set authentication headers for requests
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const accessToken = localStorage.getItem('access-token');
-    const client = localStorage.getItem('client');
-    const expiry = localStorage.getItem('expiry');
-    const uid = localStorage.getItem('uid');
+authService.interceptors.request.use(
+  async (config) => {
+    try {
+      const accessToken = localStorage.getItem('access-token');
+      const client = localStorage.getItem('client');
+      const expiry = localStorage.getItem('expiry');
+      const uid = localStorage.getItem('uid');
 
-    if (accessToken && client && expiry && uid) {
-      config.headers['access-token'] = accessToken;
-      config.headers['client'] = client;
-      config.headers['expiry'] = expiry;
-      config.headers['uid'] = uid;
+      if (accessToken && client && expiry && uid) {
+        config.headers['access-token'] = accessToken;
+        config.headers['client'] = client;
+        config.headers['expiry'] = expiry;
+        config.headers['uid'] = uid;
+      }
+
+      return config;
+    } catch (error) {
+      throw error;
     }
-
-    return config;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
 
-const authService = {
+const authServiceMethods = {
   register: async (email, password, passwordConfirmation) => {
     try {
-      const response = await axiosInstance.post('/auth', {
+      const response = await authService.post('/auth', {
         email,
         password,
         password_confirmation: passwordConfirmation,
@@ -48,16 +51,16 @@ const authService = {
 
   login: async (email, password) => {
     try {
-      const response = await axiosInstance.post('/auth/sign_in', {
+      const response = await authService.post('/auth/sign_in', {
         email,
         password,
       });
-  
+
       localStorage.setItem('access-token', response.headers['access-token']);
       localStorage.setItem('client', response.headers['client']);
       localStorage.setItem('expiry', response.headers['expiry']);
       localStorage.setItem('uid', response.headers['uid']);
-  
+
       return response;
     } catch (error) {
       throw error;
@@ -71,7 +74,7 @@ const authService = {
         user_ids: userIds,
       };
 
-      const response = await axiosInstance.post('/channels', requestBody);
+      const response = await authService.post('/channels', requestBody);
 
       return response;
     } catch (error) {
@@ -81,7 +84,7 @@ const authService = {
 
   searchUsers: async (authHeaders) => {
     try {
-      const response = await axiosInstance.get('/users', {
+      const response = await authService.get('/users', {
         headers: authHeaders,
       });
       return response.data;
@@ -109,7 +112,7 @@ const authService = {
         'uid': uid,
       };
 
-      const response = await axiosInstance.get('/channels', {
+      const response = await authService.get('/channels', {
         headers: authHeaders,
       });
 
@@ -119,6 +122,48 @@ const authService = {
     }
   },
 
+  fetchMessages: async (receiverId) => {
+    try {
+      // Make a GET request to retrieve messages
+      const response = await authService.get('/messages', {
+        params: {
+          receiver_id: receiverId,
+          receiver_class: 'User', // Assuming this is for direct messages
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  sendMessageToUser: async (receiverId, body) => {
+    try {
+      // Prepare the message data
+      const messageData = {
+        receiver_id: receiverId,
+        receiver_class: 'User', // Assuming this is for direct messages
+        body: body,
+      };
+  
+      // Make a POST request to send the message
+      const response = await authService.post('/messages', messageData);
+  
+      // Check the response status and handle accordingly
+      if (response.status === 200) {
+        console.log('Message sent successfully.');
+        return response.data; // You can return the message data if needed
+      } else {
+        console.error('Failed to send message:', response);
+        // Handle the error, show an error message, or retry the operation
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      throw error; // Rethrow the error for higher-level handling if needed
+    }
+  },
+  
 };
 
-export default authService;
+export default authServiceMethods;
