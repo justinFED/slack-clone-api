@@ -75,6 +75,20 @@ const authServiceMethods = {
     }
   },
 
+  logout: () => {
+    try {
+      localStorage.removeItem('access-token');
+      localStorage.removeItem('client');
+      localStorage.removeItem('expiry');
+      localStorage.removeItem('uid');
+      
+      window.location.href = '/login';
+
+    } catch (error) {
+      throw error;
+    }
+  },
+
   createChannel: async (channelName, userIds) => {
     try {
       const requestBody = {
