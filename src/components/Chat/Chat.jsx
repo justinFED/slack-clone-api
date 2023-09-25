@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './Chat.css';
 import { InfoOutlined } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
-import Message from './Message';
 import authServiceMethods from '../../services/authService';
+import Message from './Message'
 
-const Chat = ({ sendMessageToUser }) => {
-  const { selectedUserId } = useParams();
+import './Chat.css'
+
+const Chat = () => {
+  const { channelName, selectedUserId } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 
@@ -31,10 +32,10 @@ const Chat = ({ sendMessageToUser }) => {
   };
 
   useEffect(() => {
-    if (selectedUserId) {
+    if (selectedUserId && channelName) {
       fetchMessages(selectedUserId);
     }
-  }, [selectedUserId]);
+  }, [selectedUserId, channelName]);
 
   const sendMessage = async () => {
     try {
@@ -42,8 +43,8 @@ const Chat = ({ sendMessageToUser }) => {
         const timestamp = Date.now();
 
         const newMessageObj = {
-          body: newMessage, 
-          timestamp: timestamp, 
+          body: newMessage,
+          timestamp: timestamp,
         };
 
         setMessages((prevMessages) => [...prevMessages, newMessageObj]);
@@ -68,10 +69,7 @@ const Chat = ({ sendMessageToUser }) => {
       <div className="chat-messages">
         {messages.length > 0 ? (
           messages.map((message, index) => (
-            <Message
-              key={index}
-              message={message}
-            />
+            <Message key={index} message={message} />
           ))
         ) : (
           <p></p>

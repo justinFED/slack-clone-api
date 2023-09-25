@@ -13,8 +13,7 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await authService.login(email, password);
-  
-      
+
       if (response.status === 200) {
         navigate('/home');
       } else {
