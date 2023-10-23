@@ -67,13 +67,13 @@ const Chat = () => {
   return (
     <div className="chat">
       <div className="chat-messages">
-        {messages.length > 0 ? (
-          messages.map((message, index) => (
-            <Message key={index} message={message} />
-          ))
-        ) : (
-          <p></p>
-        )}
+      {messages.length > 0 ? (
+  messages.map((message) => (
+    <Message key={message.id} message={message} />
+  ))
+) : (
+  <p></p>
+)}
       </div>
 
       <div className="chat-input">

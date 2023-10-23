@@ -8,7 +8,7 @@ import NewMessage from "../NewMessage/NewMessage";
 
 import "./Sidebar.css";
 
-const Sidebar = ({ history }) => {
+const Sidebar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [channelName, setChannelName] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
@@ -73,15 +73,15 @@ const Sidebar = ({ history }) => {
       const channelResponse = await authService.createChannel(channelName, [
         selectedUserEmail
       ]);
-  
+
       if (channelResponse.status === 200) {
-        console.log("Channel created successfully.");
-        const createdChannel = {
-          name: channelName,
-        };
-        addChannelToList(createdChannel);
+        const createdChannelId = channelResponse.data.id; // Obtain the channel ID
+        console.log("Channel created successfully with ID:", createdChannelId);
+        // Store the createdChannelId in your state or context for later use
+        // Update your state or context with the new channel information
+        addChannelToList({ id: createdChannelId, name: channelName });
         setIsModalOpen(false);
-        history.push(`/channel/${channelName}/user/${selectedUser.value}`);
+        navigate(`/channel/${createdChannelId}/user/${selectedUser.value}`);
       } else {
         console.error("Error creating channel:", channelResponse);
         if (channelResponse.data && channelResponse.data.errors) {
@@ -92,7 +92,6 @@ const Sidebar = ({ history }) => {
       console.error("Error:", error);
     }
   };
-  
 
   const handleAddChannelClick = () => {
     setIsModalOpen(true);
@@ -101,109 +100,111 @@ const Sidebar = ({ history }) => {
   const handleUserClick = (userOption) => {
     console.log("Selected User:", userOption);
 
-     if (userOption && userOption.value && userOption.label) {
-    setSelectedUser(userOption);
-    setSearchTerm(userOption.label);
-    setSearchResults([]);
-    setShowSearchResults(false);
-  } else {
-    console.error("Invalid user option:", userOption);
-  }
-};
+    if (userOption && userOption.value && userOption.label) {
+      setSelectedUser(userOption);
+      setSearchTerm(userOption.label);
+      setSearchResults([]);
+      setShowSearchResults(false);
+    } else {
+      console.error("Invalid user option:", userOption);
+    }
+  };
 
-const handleAddChannel = async () => {
-  if (channelName && selectedUser) {
-    createChannel(channelName, selectedUser.label);
-  } else {
-    console.error(
-      "Invalid input: Either selectedUser or channelName is missing."
-    );
-  }
-};
+  const handleAddChannel = async () => {
+    if (channelName && selectedUser) {
+      createChannel(channelName, selectedUser.label);
+    } else {
+      console.error(
+        "Invalid input: Either selectedUser or channelName is missing."
+      );
+    }
+  };
 
-useEffect(() => {
-  handleUserSearch();
-}, []);
+  useEffect(() => {
+    handleUserSearch();
+  }, []);
 
-return (
-  <div className="sidebar">
-    <div className="sidebar-header">
-      <div className="sidebar-info">
-        <h2>Slack App</h2>
-        <h3>
-          <FiberManualRecord />
-          Justin Cantillo
-        </h3>
+  return (
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <div className="sidebar-info">
+          <h2>Slack App</h2>
+          <h3>
+            <FiberManualRecord />
+            Justin Cantillo
+          </h3>
+        </div>
+        <CreateIcon />
       </div>
-      <CreateIcon />
-    </div>
 
-    <div className="sidebarOption">
-      <div className="sidebar-text">
-        <NewMessage />
-        <hr />
-        <h2 onClick={handleAddChannelClick}>Add Channel</h2>
-        <ul className="channel-list">
-          {createdChannels.map((channel, index) => (
-            <li key={index}>
-              <Link
-                to={`/channel/${channel.name}/user/${selectedUser ? selectedUser.value : ""}`}
-              >
-                # {channel.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <hr />
-        <ChannelsList />
-      </div>
-    </div>
-
-    {isModalOpen && (
-      <div className="modal">
-        <label>
-          <h4>Enter channel name:</h4>
-          <input
-            type="text"
-            value={channelName}
-            onChange={(e) => setChannelName(e.target.value)}
-          />
-        </label>
-        <label>
-          <h4>Search user:</h4>
-          <input
-            type="text"
-            placeholder="Search user..."
-            value={searchTerm}
-            onChange={handleSearchInputChange}
-          />
-        </label>
-        {showSearchResults && (
-          <div className="user-search-results">
-            {searchResults.map((userOption) => (
-              <div
-                key={userOption.value}
-                className={`user-option ${
-                  userOption.value === (selectedUser && selectedUser.value)
-                    ? "selected"
-                    : ""
-                }`}
-                onClick={() => handleUserClick(userOption)}
-              >
-                {userOption.label}
-              </div>
+      <div className="sidebarOption">
+        <div className="sidebar-text">
+          <NewMessage />
+          <hr />
+          <h2 onClick={handleAddChannelClick}>Add Channel</h2>
+          <ul className="channel-list">
+            {createdChannels.map((channel) => (
+              <li key={channel.id}>
+                <Link
+                  to={`/channel/${channel.id}/user/${
+                    selectedUser ? selectedUser.value : ""
+                  }`}
+                >
+                  # {channel.name}
+                </Link>
+              </li>
             ))}
-          </div>
-        )}
-        <div className="button-container">
-          <button onClick={handleAddChannel}>Create Channel</button>
-          <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+          </ul>
+
+          <hr />
+          <ChannelsList createdChannels={createdChannels} />
         </div>
       </div>
-    )}
-  </div>
-);
-              };
+
+      {isModalOpen && (
+        <div className="modal">
+          <label>
+            <h4>Enter channel name:</h4>
+            <input
+              type="text"
+              value={channelName}
+              onChange={(e) => setChannelName(e.target.value)}
+            />
+          </label>
+          <label>
+            <h4>Search user:</h4>
+            <input
+              type="text"
+              placeholder="Search user..."
+              value={searchTerm}
+              onChange={handleSearchInputChange}
+            />
+          </label>
+          {showSearchResults && (
+            <div className="user-search-results">
+              {searchResults.map((userOption) => (
+                <div
+                  key={userOption.value}
+                  className={`user-option ${
+                    userOption.value === (selectedUser && selectedUser.value)
+                      ? "selected"
+                      : ""
+                  }`}
+                  onClick={() => handleUserClick(userOption)}
+                >
+                  {userOption.label}
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="button-container">
+            <button onClick={handleAddChannel}>Create Channel</button>
+            <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Sidebar;

@@ -91,12 +91,25 @@ const authServiceMethods = {
 
   createChannel: async (channelName, userIds) => {
     try {
+      const authHeaders = {
+        "access-token": localStorage.getItem("access-token"),
+        client: localStorage.getItem("client"),
+        expiry: localStorage.getItem("expiry"),
+        uid: localStorage.getItem("uid"),
+      };
+
+      // Include the user's ID in the user_ids array
+      const user_id = localStorage.getItem("uid"); // Assuming 'uid' contains the user's ID
+      userIds.push(user_id);
+
       const requestBody = {
         name: channelName,
         user_ids: userIds,
       };
 
-      const response = await authService.post('/channels', requestBody);
+      const response = await authService.post('/channels', requestBody, {
+        headers: authHeaders,
+      });
 
       return response;
     } catch (error) {
@@ -209,6 +222,8 @@ const authServiceMethods = {
       throw error;
     }
   },
+
+  
 
 };
 

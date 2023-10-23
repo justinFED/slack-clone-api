@@ -51,7 +51,7 @@ function Login() {
       </div>
       <button className="log-button" onClick={handleLogin}>Login</button>
       <p>
-        Don't have an account? <Link to="/register">Register</Link>
+        Don't have an account? <Link to="/">Register</Link>
       </p>
     </div>
     </div>
